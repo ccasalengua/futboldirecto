@@ -36,6 +36,50 @@
         &:hover {
             background-color: #f8f8f8;
         }
+
+        //RANK POSITIONS
+        &.champions {
+            .fd-table {
+                &__col-int{
+                    &::before{
+                        content: "";
+                        border-left: 4px solid green;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+        &.uefa {
+            .fd-table {
+                &__col-int{
+                    &::before{
+                        content: "";
+                        border-left: 4px solid yellow;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+        &.relegation {
+            .fd-table {
+                &__col-int{
+                    &::before{
+                        content: "";
+                        border-left: 4px solid red;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        height: 100%;
+                    }
+                }
+            }
+        }
     }
     &__col {
         position: relative;
@@ -57,21 +101,13 @@
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-items: center;
-        &::before{
-            content: "";
-            border-left: 4px solid green;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-        }
     }
     &__team-rank {
-        flex-basis: 3.75rem;
+        flex-basis: 3.25rem;
         font-size: 1.5rem;
         color: red;
         font-weight: bold;
-        padding: 0 1rem;
+        padding: 0 0 0 1rem;
     }
     &__team-logo {
         display: flex;
@@ -87,6 +123,47 @@
     &__team-name {
         font-size: 1.2rem;
     }
+    &__collapse-button{
+        display: none;
+    }
+
+    &__legend {
+        display: flex; 
+        flex-wrap: wrap;
+        list-style: none;
+        margin-top: 1rem;
+        > li {
+            margin-right: 1rem;
+            span {
+                padding-left: 0.5rem;
+            }
+            &:before{
+                content: "";
+                border-left: 5px solid green;
+            }
+            &.fd-table__zone-top-1 {
+                &:before{
+                    border-left-color: green;
+                }
+            }
+            &.fd-table__zone-top-2 {
+                &:before{
+                    border-left-color: yellow;
+                }
+            }
+            &.fd-table__zone-top-3 {
+                &:before{
+                    border-left-color: blue;
+                }
+            }
+            &.fd-table__zone-bottom-1 {
+                &:before{
+                    border-left-color: red;
+                }
+            }
+        }
+    }
+    
 }
 
 
@@ -109,6 +186,25 @@
             border-bottom: 3px solid #ddd;
             display: block;
             margin-bottom: .625em;
+            transition: max-height 1s ease;
+            cursor: pointer;
+            &.collapsed {
+                max-height: 3.5rem;
+                overflow: hidden;
+                &-in{
+                    max-height: 37.5rem;
+                    overflow: auto;
+                    overflow-y: hidden;
+                    .fd-table {
+                        &__collapse-button {
+                            &:after{
+                                border-top: 0;
+                                border-bottom: 8px solid #333;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         &__col {
@@ -116,7 +212,12 @@
             display: block;
             font-size: .8rem;
             text-align: left;
-            
+            width: 100%;
+            padding-left: 1rem;
+            &:first-child {
+                width: 100%;
+                padding-left: 0;
+            }
             &::before {
                 /*
                 * aria-label has no advantage, it won't be read inside a table
@@ -132,6 +233,28 @@
                 border-bottom: 0;
             }
         }
+        &__collapse-button{
+            position: absolute;
+            display: block;
+            right: 0;
+            text-indent: -999rem;
+            overflow: hidden;
+            width: 3rem;
+            border: 0;
+            background: none;
+            height: 100%;
+            &:after{
+                content:"";
+                position: absolute;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #333;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
     }
 
   }

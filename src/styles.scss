@@ -1,11 +1,11 @@
-/* make the customizations */
-$theme-colors: (
-  'info': tomato,
-  'danger': teal
-);
 
-/* import bootstrap to set changes */
-// @import './node_modules/bootstrap/scss/bootstrap';
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+@import './styles/reset';
 
 
-// Custom Components
