@@ -1,0 +1,25 @@
+.fd-ranking {
+    display: flex;
+    flex-flow: wrap;
+
+    &__box {
+        border: 1px solid #a3a3a3;
+        background-color: #dfdfdf;
+    }
+
+    &__header {
+        font-size: 1.25rem;
+        font-weight: bold;
+        padding: 1rem;
+        border-bottom: 1px solid #a3a3a3;;
+    }
+
+    &__row {
+        display: flex;
+
+    }
+    &__col {
+        display: flex;
+    }
+}
+
