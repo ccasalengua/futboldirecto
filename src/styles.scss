@@ -6,6 +6,12 @@
   text-align: left;
 }
 
+.fd-tabs {
+  .MuiTabs-scroller{
+    overflow: auto!important;
+  }
+}
+
 @import './styles/reset';
 
 

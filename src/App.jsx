@@ -9,15 +9,18 @@ import { Live } from "./components/Live/Live";
 import { Calendar } from "./components/Calendar/Calendar";
 
 function App() {
-    const [value, setValue] = useState('2');
+    const [activeTab, setActiveTab] = useState('1');
+    const [league, setLeague] = useState(140);
 
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
+    const changeTab = (event, newValue) => {
+        setActiveTab(newValue);
     };
 
     const onChangeLeague = (value = 140) => {
+        setLeague(value);
         return value;
     }
+
 
 
     return (
@@ -28,9 +31,9 @@ function App() {
                 <SelectLeague onChangeLeague={onChangeLeague}></SelectLeague>
             </form>
 
-            <TabContext value={value}>
+            <TabContext value={activeTab}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="tablist">
+                    <TabList className="fd-tabs" onChange={changeTab} aria-label="tablist">
                         <Tab label="En directo" value="0" />
                         <Tab label="Calendario" value="1" />
                         <Tab label="Clasificacion" value="2" />
@@ -41,10 +44,10 @@ function App() {
                     <Live></Live>
                 </TabPanel>
                 <TabPanel value="1">
-                    <Calendar></Calendar>
+                    <Calendar leagueID={league}></Calendar>
                 </TabPanel>
                 <TabPanel value="2">
-                    <Clasificacion onChangeLeague={onChangeLeague}></Clasificacion>
+                    <Clasificacion leagueID={league}></Clasificacion>
                 </TabPanel>
                 <TabPanel value="3">
                     <Ranking></Ranking>

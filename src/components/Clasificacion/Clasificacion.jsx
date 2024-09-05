@@ -1,27 +1,43 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { getLeague } from "../../helpers/getLeague";
+import PropTypes from 'prop-types';
 import { premierLeagueMock } from "../../mocks/premierLeague";
 
 import './Clasificacion.scss';
 
-export const Clasificacion = ({onChangeLeague}) => {
+export const Clasificacion = ({leagueID}) => {
 
-    // const [counter, setCounter] = useState(140);
-    // let resp = [];
-    // useEffect(() => {
-    //     console.log('league primera vez: ', onChangeLeague());
-    //     getLeague(140);
-    // }, [])
-    
-    
-    
-    
-    // const data = getLeague(onChangeLeague());
-    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/standings?league=140&season=2024`);
+    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/standings?league=${leagueID}&season=2024`);
     // const data = premierLeagueMock;
-    const [collapse, setCollapse] = useState(new Array(data[0]?.league?.standings[0].length).fill(true));
 
+    const numberOfTeams = data[0]?.league?.standings[0].length;
+    console.log('numberOfTeams: ', numberOfTeams)
+
+    const [collapse, setCollapse] = useState(new Array(numberOfTeams).fill(true));
+
+    const setCollapseDataAsync = async () => {
+        setCollapse(new Array(numberOfTeams).fill(true))
+    }
+
+    const useEffectIf = (loading, fn) => {
+        useEffect(() => {if (!loading) {
+            fn();
+            return () => {};
+        }}, [loading])
+      }
+
+
+    useEffectIf(isLoading, setCollapseDataAsync);
+    
+
+    if (hasError) {
+        return <p>Ha habido un problema en la carga... Intenta de nuevo mas tarde.</p>
+    }
+    if (isLoading || !data) {
+        return <p>Cargando...</p>
+    }
+    
+    console.log('collapse: ', collapse)
     const clickCollapse = (index) => {
         setCollapse(prevState => { 
             let copyShow = [...prevState];
@@ -117,3 +133,7 @@ export const Clasificacion = ({onChangeLeague}) => {
         </>
     );
 };
+
+Clasificacion.propTypes = {
+    leagueID: PropTypes.number
+}

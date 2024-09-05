@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import { useFetch } from "../../hooks/useFetch";
 import { Box, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import './SelectLeague.scss';
@@ -3796,3 +3797,7 @@ export const SelectLeague = ({onChangeLeague}) => {
             </Box>
     );
 };
+
+// SelectLeague.propTypes = {
+//     onChangeLeague: PropTypes.Function
+// }
