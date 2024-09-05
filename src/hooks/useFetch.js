@@ -13,7 +13,7 @@ export const useFetch = (url) => {
 
     useEffect(() => {
         getFetch();        
-     }, []);
+     }, [url]);
     
 
      const setLoadingState = () => {
@@ -50,7 +50,7 @@ export const useFetch = (url) => {
         const resp = await fetch(url, requestOptions);
 
         //SLEEP
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // await new Promise(resolve => setTimeout(resolve, 500));
 
         if (!resp.ok) {
             setState({

@@ -4,41 +4,63 @@ import { calendarMock } from "../../mocks/calendarMock";
 
 import './Calendar.scss';
 
-export const Calendar = () => {    
-    
-    // const data = getLeague(onChangeLeague());
-    // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?season=2024&league=140&current=true`);
+export const Calendar = ({leagueID}) => {    
+        
+    //  const {data = [], hasError, isLoading} = useFetch(`https:v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}`);
     const data = calendarMock;
 
-    console.log(data);
+    console.log('calendarMock: ',data);
+
+    const getNumberRounds = () => {
+        let roundsArray = [];
+        data.map((round) => {
+            
+            if (!roundsArray.includes(round.league.round.split("-")[1])) {
+                roundsArray = [...roundsArray, round.league.round.split("-")[1]]
+            }
+        });
+        console.log('roundsArray: ', roundsArray);
+        return roundsArray
+    }
+
 
     return (
         <>
             <h1>Calendario </h1>
 
-            {/* <div className="fd-ranking">
-                <section className="fd-ranking__box fd-ranking__goals">
-                    <header className="fd-ranking__header">Goles</header>
+            <div className="fd-calendar">
+                <section className="fd-calendar__box fd-calendar__round">
                     {
-                        data.map((player, i) => (
-                            <div className="fd-ranking__row" key={player.player.id}>
-                                <span className="fd-ranking__col fd-ranking__player-rank">{i + 1} </span>
-                                <div className="fd-ranking__col fd-ranking__player-info">
-                                    <img className="fd-ranking__player-photo" src={player.player.photo} alt={player.player.name}/>
-                                    <span className="fd-ranking__player-name">{player.player.name}</span>
-                                    <span className="fd-ranking__player-position">{player.statistics[0].games.position}</span>
-                                    <div className="fd-ranking__player-team">
-                                        <img className="fd-ranking__team-photo" src={player.statistics[0].team.logo} alt={player.statistics[0].team.name}/>
-                                        <span className="fd-ranking__team-name">{player.statistics[0].team.name}</span>
-                                    </div> 
-                                </div>
-                                <span className="fd-ranking__col fd-ranking__player-goals">{player.statistics[0].goals.total}</span>
+                        
+                        getNumberRounds().map((round) => (
+                            <div key={round} >
+                                <header className="fd-calendar__header">Jornada {round}</header>
+                                <ul >
+                                {
+                                    data.map((game, i) => (
+                                        <li key={game.fixture.id} className="fd-calendar__row">
+                                            <span className="fd-calendar__col fd-calendar__player-rank">{round} </span>
+                                            <div className="fd-calendar__col fd-calendar__player-info">
+                                                {/* <img className="fd-calendar__player-photo" src={round.player.photo} alt={round.player.name}/>
+                                                <span className="fd-calendar__player-name">{round.player.name}</span>
+                                                <span className="fd-calendar__player-position">{round.statistics[0].games.position}</span>
+                                                <div className="fd-calendar__player-team">
+                                                    <img className="fd-calendar__team-photo" src={round.statistics[0].team.logo} alt={round.statistics[0].team.name}/>
+                                                    <span className="fd-calendar__team-name">{round.statistics[0].team.name}</span>
+                                                </div>  */}
+                                            </div>
+                                            {/* <span className="fd-calendar__col fd-calendar__player-goals">{round.statistics[0].goals.total}</span> */}
+                                        </li>           
+                                    ))
+                                }
+                                </ul>   
                             </div>
                         ))
                     }
+                    
                 </section>
             
-            </div> */}
+            </div>
         </>
     );
 };

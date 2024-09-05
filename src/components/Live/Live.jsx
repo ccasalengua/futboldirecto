@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { liveMock } from "../../mocks/liveMock";
+import { roundMock } from "../../mocks/roundMock";
 
 import './Live.scss';
 
@@ -8,7 +9,10 @@ export const Live = () => {
     
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?status="NS"`);
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?live=140-703`);
-    const data = liveMock;
+    const round = roundMock;
+    // const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?season=2024&league=140&current=true`);
+    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=140&round=${round}`);
+    // const data = liveMock;
 
     console.log(data);
 

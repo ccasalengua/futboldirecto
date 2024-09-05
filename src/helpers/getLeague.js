@@ -1,4 +1,4 @@
-export const getLeague = async(leagueID = 140) => {
+export const getLeague = async(leagueID) => {
     const apiKey = '34082beab83494bf37f0e7658605122b';
 
     const requestOptions = {
