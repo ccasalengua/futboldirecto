@@ -23,6 +23,110 @@ export const Calendar = ({leagueID}) => {
         return roundsArray
     }
 
+    const getRound = () => {
+        let roundsArray = [];
+        data.map((round) => {
+            
+            if (!roundsArray.includes(round.league.round)) {
+                roundsArray = [...roundsArray, round.league.round];
+            }
+        });
+        return roundsArray;
+    }
+
+    const gamesForRound = (data) => {
+        let gamesForRound = [];
+
+        getRound().map((round, index) => {
+            gamesForRound.push({
+                round: round,
+                dates: [],
+                firstDate: '',
+                lastDate: '',
+                roundNumber: parseInt(round.split("-")[1]),
+                games: []
+            })
+            data.map((game) => {
+                if (game.league.round === round) {
+                    gamesForRound[index].games.push(game);
+                    gamesForRound[index].dates.push(game.fixture.date)
+                    
+                }
+            })
+
+            gamesForRound[index].firstDate = gamesForRound[index].dates[0];
+            gamesForRound[index].lastDate = gamesForRound[index].dates[gamesForRound[index].dates.length - 1];
+        });
+
+        
+        console.log('new Date: ', new Date());
+        console.log(gamesForRound.map(game=> game.lastDate))
+            
+        return gamesForRound;
+    }
+
+    const getDate = (date) => {
+        let year = date.split('-')[0];
+        let month = date.split('-')[1];
+        let day = date.split('-')[2].split('T')[0];
+        let hour = date.split('-')[2].split('T')[1].split('+')[0];
+
+        // const finalDate = `${day}/${month}/${year}`;
+
+        const finalDate = {
+            day: day,
+            month: month,
+            year: year,
+            hour: hour
+        }
+
+        return finalDate;
+    }
+
+    const getMonth = (month) => {
+        switch (month) {
+            case '01': {
+                return 'Enero';
+            }
+            case '02': {
+                return 'Febrero'
+            }
+            case '03': {
+                return 'Marzo'
+            }
+            case '04': {
+                return 'Abril'
+            }
+            case '05': {
+                return 'Mayo'
+            }
+            case '06': {
+                return 'Mayo'
+            }
+            case '07': {
+                return 'Mayo'
+            }
+            case '08': {
+                return 'Agosto'
+            }
+            case '09': {
+                return 'Mayo'
+            }
+            case '10': {
+                return 'Mayo'
+            }
+            case '11': {
+                return 'Mayo'
+            }
+            case '12': {
+                return 'Mayo'
+            }
+            
+            default: 
+                return 'Enero'
+            
+        }
+    }
 
     return (
         <>
@@ -31,28 +135,28 @@ export const Calendar = ({leagueID}) => {
             <div className="fd-calendar">
                 <section className="fd-calendar__box fd-calendar__round">
                     {
-                        
-                        getNumberRounds().map((round) => (
-                            <div key={round} >
-                                <header className="fd-calendar__header">Jornada {round}</header>
+                        gamesForRound(data).map((round) => (
+                            <div key={round.roundNumber} >
+                                <header className="fd-calendar__header">Jornada {round.roundNumber} - <span>{getDate(round.firstDate).day} - {getDate(round.lastDate).day} {getMonth(getDate(round.lastDate).month)} </span></header>
                                 <ul >
-                                {
-                                    data.map((game, i) => (
-                                        <li key={game.fixture.id} className="fd-calendar__row">
-                                            <span className="fd-calendar__col fd-calendar__player-rank">{round} </span>
-                                            <div className="fd-calendar__col fd-calendar__player-info">
-                                                {/* <img className="fd-calendar__player-photo" src={round.player.photo} alt={round.player.name}/>
-                                                <span className="fd-calendar__player-name">{round.player.name}</span>
-                                                <span className="fd-calendar__player-position">{round.statistics[0].games.position}</span>
-                                                <div className="fd-calendar__player-team">
-                                                    <img className="fd-calendar__team-photo" src={round.statistics[0].team.logo} alt={round.statistics[0].team.name}/>
-                                                    <span className="fd-calendar__team-name">{round.statistics[0].team.name}</span>
-                                                </div>  */}
-                                            </div>
-                                            {/* <span className="fd-calendar__col fd-calendar__player-goals">{round.statistics[0].goals.total}</span> */}
-                                        </li>           
-                                    ))
-                                }
+                                    {
+                                        round.games.map((game) => (
+                                            <li key={game.fixture.id} className="fd-calendar__row">
+                                                <div className="fd-calendar__col fd-calendar__player-info">
+                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.teams.home.name} </span>
+                                                    
+                                                </div>
+                                                <div>
+                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.score.fulltime.home} - </span>
+                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.score.fulltime.away}</span>
+                                                </div>
+                                                <div className="fd-calendar__col fd-calendar__player-info">
+                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.teams.away.name} </span>
+                                                    
+                                                </div>
+                                            </li>           
+                                        ))
+                                    }
                                 </ul>   
                             </div>
                         ))
