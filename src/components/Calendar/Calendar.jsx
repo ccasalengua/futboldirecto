@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { calendarMock } from "../../mocks/calendarMock";
 
+
 import './Calendar.scss';
 
 export const Calendar = ({leagueID}) => {    
@@ -10,18 +11,6 @@ export const Calendar = ({leagueID}) => {
     const data = calendarMock;
 
     console.log('calendarMock: ',data);
-
-    const getNumberRounds = () => {
-        let roundsArray = [];
-        data.map((round) => {
-            
-            if (!roundsArray.includes(round.league.round.split("-")[1])) {
-                roundsArray = [...roundsArray, round.league.round.split("-")[1]]
-            }
-        });
-        console.log('roundsArray: ', roundsArray);
-        return roundsArray
-    }
 
     const getRound = () => {
         let roundsArray = [];
@@ -59,8 +48,7 @@ export const Calendar = ({leagueID}) => {
         });
 
         
-        console.log('new Date: ', new Date());
-        console.log(gamesForRound.map(game=> game.lastDate))
+        console.log('dates: ' , gamesForRound.map(game=>game.dates))
             
         return gamesForRound;
     }
@@ -85,46 +73,32 @@ export const Calendar = ({leagueID}) => {
 
     const getMonth = (month) => {
         switch (month) {
-            case '01': {
-                return 'Enero';
-            }
-            case '02': {
+            case '01': 
+                return 'Enero'
+            case '02': 
                 return 'Febrero'
-            }
-            case '03': {
+            case '03': 
                 return 'Marzo'
-            }
-            case '04': {
+            case '04': 
                 return 'Abril'
-            }
-            case '05': {
+            case '05': 
                 return 'Mayo'
-            }
-            case '06': {
-                return 'Mayo'
-            }
-            case '07': {
-                return 'Mayo'
-            }
-            case '08': {
+            case '06': 
+                return 'Junio'
+            case '07': 
+                return 'Julio'
+            case '08': 
                 return 'Agosto'
-            }
-            case '09': {
-                return 'Mayo'
-            }
-            case '10': {
-                return 'Mayo'
-            }
-            case '11': {
-                return 'Mayo'
-            }
-            case '12': {
-                return 'Mayo'
-            }
-            
+            case '09': 
+                return 'Septiembre'
+            case '10': 
+                return 'Octubre'
+            case '11': 
+                return 'Noviembre'
+            case '12': 
+                return 'Diciembre'
             default: 
                 return 'Enero'
-            
         }
     }
 
@@ -133,37 +107,33 @@ export const Calendar = ({leagueID}) => {
             <h1>Calendario </h1>
 
             <div className="fd-calendar">
-                <section className="fd-calendar__box fd-calendar__round">
-                    {
-                        gamesForRound(data).map((round) => (
-                            <div key={round.roundNumber} >
-                                <header className="fd-calendar__header">Jornada {round.roundNumber} - <span>{getDate(round.firstDate).day} - {getDate(round.lastDate).day} {getMonth(getDate(round.lastDate).month)} </span></header>
-                                <ul >
-                                    {
-                                        round.games.map((game) => (
-                                            <li key={game.fixture.id} className="fd-calendar__row">
-                                                <div className="fd-calendar__col fd-calendar__player-info">
-                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.teams.home.name} </span>
-                                                    
-                                                </div>
-                                                <div>
-                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.score.fulltime.home} - </span>
-                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.score.fulltime.away}</span>
-                                                </div>
-                                                <div className="fd-calendar__col fd-calendar__player-info">
-                                                    <span className="fd-calendar__col fd-calendar__player-rank">{game.teams.away.name} </span>
-                                                    
-                                                </div>
-                                            </li>           
-                                        ))
-                                    }
-                                </ul>   
-                            </div>
-                        ))
-                    }
-                    
-                </section>
-            
+                {
+                    gamesForRound(data).map((round) => (
+                        <section className="fd-calendar__box fd-calendar__round" key={round.roundNumber} >
+                            <header className="fd-calendar__header">Jornada {round.roundNumber} <span className="fd-calendar__date">{getDate(round.firstDate).day} - {getDate(round.lastDate).day} {getMonth(getDate(round.lastDate).month)} </span></header>
+                            <ul className="fd-calendar__list">
+                                {
+                                    round.games.map((game) => (
+                                        <li key={game.fixture.id} className="fd-calendar__row">
+                                            <div className="fd-calendar__col fd-calendar__home-team">
+                                                <span className="fd-calendar__team-name fd-calendar__home-team-name">{game.teams.home.name} </span>
+                                                
+                                            </div>
+                                            <div className="fd-calendar__score-box">
+                                                <span className="fd-calendar__score fd-calendar__score-home">{game.score.fulltime.home} - </span>
+                                                <span className="fd-calendar__score fd-calendar__score-away">{game.score.fulltime.away}</span>
+                                            </div>
+                                            <div className="fd-calendar__col fd-calendar__away-team">
+                                                <span className="fd-calendar__team-name fd-calendar__away-team-name">{game.teams.away.name} </span>
+                                                
+                                            </div>
+                                        </li>           
+                                    ))
+                                }
+                            </ul>   
+                        </section>
+                    ))
+                }
             </div>
         </>
     );

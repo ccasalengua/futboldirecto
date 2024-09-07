@@ -4,11 +4,11 @@ import { rankingMock } from "../../mocks/rankingMock";
 
 import './Ranking.scss';
 
-export const Ranking = () => {    
+export const Ranking = ({leagueID}) => {    
     
     // const data = getLeague(onChangeLeague());
-    // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/players/topscorers?season=2024&league=140`);
-    const data = rankingMock;
+    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/players/topscorers?season=2024&league=${leagueID}`);
+    //const data = rankingMock;
 
     console.log(data);
 

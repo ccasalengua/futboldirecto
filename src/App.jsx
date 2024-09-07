@@ -21,8 +21,6 @@ function App() {
         return value;
     }
 
-
-
     return (
         <AppTheme>
             <h1>FUTBOL DIRECTO</h1>
@@ -31,7 +29,7 @@ function App() {
                 <SelectLeague onChangeLeague={onChangeLeague}></SelectLeague>
             </form>
 
-            <TabContext value={activeTab}>
+            <TabContext className="fd-tabs__context" value={activeTab}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <TabList className="fd-tabs" onChange={changeTab} aria-label="tablist">
                         <Tab label="En directo" value="0" />
@@ -40,17 +38,17 @@ function App() {
                         <Tab label="Ranking" value="3" />
                     </TabList>
                 </Box>
-                <TabPanel value="0">
+                <TabPanel className="fd-tabs__panel" value="0">
                     <Live></Live>
                 </TabPanel>
-                <TabPanel value="1">
+                <TabPanel className="fd-tabs__panel" value="1">
                     <Calendar leagueID={league}></Calendar>
                 </TabPanel>
-                <TabPanel value="2">
+                <TabPanel className="fd-tabs__panel" value="2">
                     <Clasificacion leagueID={league}></Clasificacion>
                 </TabPanel>
-                <TabPanel value="3">
-                    <Ranking></Ranking>
+                <TabPanel className="fd-tabs__panel" value="3">
+                    <Ranking leagueID={league}></Ranking>
                 </TabPanel>
             </TabContext>
             

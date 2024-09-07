@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { premierLeagueMock } from "../../mocks/premierLeague";
 
 import './Clasificacion.scss';
+import { Loading } from "../../shared/components/Loading/Loading";
 
 export const Clasificacion = ({leagueID}) => {
 
@@ -34,7 +35,7 @@ export const Clasificacion = ({leagueID}) => {
         return <p>Ha habido un problema en la carga... Intenta de nuevo mas tarde.</p>
     }
     if (isLoading || !data) {
-        return <p>Cargando...</p>
+        return <Loading></Loading>
     }
     
     console.log('collapse: ', collapse)
