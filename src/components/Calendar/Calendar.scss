@@ -36,10 +36,15 @@
         align-items: center;
         gap: 0.5rem;
     }
+    
     &__home-team {
         justify-content: flex-end;
-        
     }
+
+    &__home-team-name {
+        text-align: right;
+    }
+
     &__team-logo {
         max-width: 1.25rem;
     }
@@ -52,13 +57,32 @@
         text-align: center;
         &--ns {
             background: #af8000;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
         }
     }
 
     &__date {
         font-size: 0.75rem;
         font-style: italic;
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .fd-calendar {
+        &__box {
+            flex-basis: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .fd-calendar {
+        &__score-box {
+            flex-basis: 18%;
+        }
+        &__col {
+            flex-basis: 41%;
+        }
     }
 }
 
