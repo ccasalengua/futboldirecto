@@ -32,15 +32,28 @@
         padding: 0 1rem;
         align-content: stretch;
         flex-basis: 42%;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
-    &__home-team{
-        text-align: right;
+    &__home-team {
+        justify-content: flex-end;
+        
+    }
+    &__team-logo {
+        max-width: 1.25rem;
     }
 
     &__score-box {
         color: #FFF;
         background: #333;
         padding: 0.5rem 1rem;
+        flex-basis: 14%;
+        text-align: center;
+        &--ns {
+            background: #af8000;
+            font-size: 0.875rem;
+        }
     }
 
     &__date {

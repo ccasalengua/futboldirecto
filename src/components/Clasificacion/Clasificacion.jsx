@@ -12,7 +12,6 @@ export const Clasificacion = ({leagueID}) => {
     // const data = premierLeagueMock;
 
     const numberOfTeams = data[0]?.league?.standings[0].length;
-    console.log('numberOfTeams: ', numberOfTeams)
 
     const [collapse, setCollapse] = useState(new Array(numberOfTeams).fill(true));
 
@@ -38,7 +37,6 @@ export const Clasificacion = ({leagueID}) => {
         return <Loading></Loading>
     }
     
-    console.log('collapse: ', collapse)
     const clickCollapse = (index) => {
         setCollapse(prevState => { 
             let copyShow = [...prevState];
@@ -48,16 +46,18 @@ export const Clasificacion = ({leagueID}) => {
     };
 
     const rankPosition = (team) => {
-        let result = '';
-        if (team.description === 'Champions League') {
-            result = 'champions';
-        } else if (team.description === 'UEFA Europa League') {
-            result = 'uefa';
-        } else if (team.description === 'Relegation') {
-            result = 'relegation';
+        switch (team.description) {
+            case 'Champions League':
+                return 'champions'
+            case 'UEFA Europa League':
+                return 'uefa'
+            case 'Conference League Qualification':
+                return 'conference'
+            case 'Relegation':
+                return 'relegation'
+            default:
+                return ''
         }
-
-        return result;
     }
 
     return (

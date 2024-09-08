@@ -43,11 +43,7 @@
                 &__col-int{
                     &::before{
                         content: "";
-                        border-left: 4px solid green;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        height: 100%;
+                        border-color: #0f8f0f;
                     }
                 }
             }
@@ -57,11 +53,17 @@
                 &__col-int{
                     &::before{
                         content: "";
-                        border-left: 4px solid yellow;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        height: 100%;
+                        border-color: #cfcf09
+                    }
+                }
+            }
+        }
+        &.conference {
+            .fd-table {
+                &__col-int{
+                    &::before{
+                        content: "";
+                        border-color: #123f9e;
                     }
                 }
             }
@@ -71,11 +73,7 @@
                 &__col-int{
                     &::before{
                         content: "";
-                        border-left: 4px solid red;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        height: 100%;
+                        border-color: #c51b1b;
                     }
                 }
             }
@@ -101,6 +99,14 @@
         flex-flow: row nowrap;
         justify-content: flex-start;
         align-items: center;
+        &::before{
+            content: "";
+            border-left: 8px solid transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+        }
     }
     &__team-rank {
         flex-basis: 3.25rem;
