@@ -39,7 +39,7 @@ function App() {
                     </TabList>
                 </Box>
                 <TabPanel className="fd-tabs__panel" value="0">
-                    <Live></Live>
+                    <Live leagueID={league}></Live>
                 </TabPanel>
                 <TabPanel className="fd-tabs__panel" value="1">
                     <Calendar leagueID={league}></Calendar>

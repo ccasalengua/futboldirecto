@@ -8,28 +8,30 @@ dayjs.extend(isSameOrAfter);
 
 import './Live.scss';
 
-export const Live = () => {    
+export const Live = ({leagueID}) => {    
     
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?status="NS"`);
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?live=140-703`);
 
     // LIVE 
-    let {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?live=all`);
-    const liveData = data;
+    const liveData = useFetch(`https://v3.football.api-sports.io/fixtures?live=all`);
+    // let data = liveMock;
+    console.log('liveData: ' , liveData.data);
     //END LIVE
     
-    const round = roundMock;
-    // const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?current=true`);
-    // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=140&round=${round}`);
-    // let data = liveMock;
+    const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?league=${leagueID}&season=2024&current=true`);
+    // const round = roundMock;
+    console.log('round: ', round.data);
+    
+    
+    const roundData = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}&round=${round.data}`);
+    const roundSorted = roundData.data.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
 
+    // const roundSorted = data.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
     
-    data = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=140&round=${round}`);
     
-    const roundSorted = data.data.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
-    
-    console.log('round: ', round)
-    console.log('liveMock: ' , data);
+
+    console.log('roundData: ' , roundData.data);
 
     return (
         <>
@@ -37,7 +39,7 @@ export const Live = () => {
             <section className="fd-calendar fd-live">
                 <div className="fd-live__box fd-live__round" >
                     {
-                        liveData.map((round, i) => (
+                        liveData.data.map((round, i) => (
                             <div key={round.fixture.id} className="fd-calendar__box fd-calendar__round" >
                                 <div className="fd-calendar__header">Partido {i + 1}
                                     <span className="fd-calendar__date">{dayjs(round.fixture.date).format('DD/MM/YYYY - HH:mm')}</span>
@@ -80,9 +82,7 @@ export const Live = () => {
                 </div>
             </section>
             <section className="fd-calendar fd-live">
-            {roundSorted && 
-                <header className="fd-calendar__header">Jornada {parseInt(round[0].split("-")[1])}</header>
-            }
+                {/* <header className="fd-calendar__header">Jornada {parseInt(round[0].split("-")[1])}</header> */}
                 <div className="fd-live__box fd-live__round" >
                     {
                         roundSorted.map((round, i) => (
