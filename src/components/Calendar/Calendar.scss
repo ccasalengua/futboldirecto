@@ -53,7 +53,7 @@
         color: #FFF;
         background: #333;
         padding: 0.5rem 1rem;
-        flex-basis: 14%;
+        flex-basis: 16%;
         text-align: center;
         &--ns {
             background: #af8000;
@@ -64,6 +64,19 @@
     &__date {
         font-size: 0.75rem;
         font-style: italic;
+        padding-left: 0.5rem;
+    }
+
+}
+
+@media screen and (max-width: 1279px) {
+    .fd-calendar {
+        &__score-box {
+            flex-basis: 18%;
+        }
+        &__col{
+            flex-basis: 41%;
+        }
     }
 }
 
@@ -72,17 +85,47 @@
         &__box {
             flex-basis: 100%;
         }
+        &__score-box {
+            flex-basis: 13%;
+        }
+        &__col{
+            flex-basis: 43%;
+        }
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
+    .fd-calendar {
+
+        &__score-box {
+            flex-basis: 16%;
+        }
+        &__col{
+            flex-basis: 42%;
+        }
+    }
+}
+
+@media screen and (max-width: 599px) {
     .fd-calendar {
         &__score-box {
-            flex-basis: 18%;
+            flex-basis: 20%;
         }
-        &__col {
-            flex-basis: 41%;
+        &__col{
+            flex-basis: 40%;
         }
     }
 }
 
+@media screen and (max-width: 479px) {
+    .fd-calendar {
+        &__score-box {
+            flex-basis: 24%;
+        }
+        &__col{
+            flex-flow: row wrap;
+            flex-basis: 36%;
+            padding: 0 0.5rem;
+        }
+    }
+}

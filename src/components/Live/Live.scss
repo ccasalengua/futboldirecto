@@ -1,4 +1,12 @@
 .fd-live {
-    
+    &__round {
+        display: flex;
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        gap: 0 1rem;
+    }
+    + .fd-live {
+        margin-top: 2rem;
+    }
 }
 

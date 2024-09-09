@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { calendarMock } from "../../mocks/calendarMock";
-import { format, parse } from "@formkit/tempo";
+import dayjs from "dayjs";
+import es from "dayjs/locale/es";
+import minMax from "dayjs/plugin/minMax";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+dayjs.extend(minMax);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
+dayjs.locale(es);
 
 
 import './Calendar.scss';
 
 export const Calendar = ({leagueID}) => {    
         
-    //  const {data = [], hasError, isLoading} = useFetch(`https:v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}`);
-    const data = calendarMock;
+    const {data = [], hasError, isLoading} = useFetch(`https:v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}`);
+    // const data = calendarMock;
 
     console.log('calendarMock: ', data);
 
@@ -39,25 +47,21 @@ export const Calendar = ({leagueID}) => {
             data.map((game) => {
                 if (game.league.round === round) {
                     gamesForRound[index].games.push(game);
-                    gamesForRound[index].dates.push(new Date(game.fixture.date));
-                    gamesForRound[index].datesShort.push(format(game.fixture.date, 'short'));
+                    gamesForRound[index].dates.push(dayjs(game.fixture.date));
+                    gamesForRound[index].datesShort.push(dayjs(game.fixture.date).format('DD/MM/YYYY'));
                 }
             });
 
-            let firstDate = new Date(Math.min(...gamesForRound[index].dates)).getDate();
-            let lastDate = new Date(Math.max(...gamesForRound[index].dates)).getDate();
-            let firstMonth = new Date(Math.min(...gamesForRound[index].dates)).toLocaleString('default', { month: 'long' });
-            let lastMonth = new Date(Math.max(...gamesForRound[index].dates)).toLocaleString('default', { month: 'long' });
-
+            let firstDate = dayjs.min(...gamesForRound[index].dates).format('DD');
+            let lastDate = dayjs.max(...gamesForRound[index].dates).format('DD');
+            let firstMonth = dayjs.min(...gamesForRound[index].dates).format('MMMM');
+            let lastMonth = dayjs.max(...gamesForRound[index].dates).format('MMMM');
 
             gamesForRound[index].finalDate = `${firstDate} ${firstMonth === lastMonth ? '' : firstMonth} - ${lastDate} ${lastMonth} `;
-  
-            gamesForRound[index].datesShort = gamesForRound[index].datesShort.sort((a, b) => new Date(a.dates).getTime() > new Date(b.dates).getTime());
-            gamesForRound[index].games = gamesForRound[index].games.sort((a, b) => new Date(a.dates).getTime() > new Date(b.dates).getTime());
-            console.log(gamesForRound)
+            gamesForRound[index].games = gamesForRound[index].games.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
+
         });
         
-        console.log(gamesForRound)
         return gamesForRound;
     }
 
@@ -88,11 +92,17 @@ export const Calendar = ({leagueID}) => {
                                                     </>
                                                 }
                                                 {game.fixture.status.short === 'NS' && 
-                                                    <span className="fd-calendar__score fd-calendar__not-started">{format(new Date(game.fixture.date),'d')} {format(game.fixture.date, {time:'short'})} </span>
+                                                    <span className="fd-calendar__score fd-calendar__not-started">{dayjs(game.fixture.date).format('dd')} {dayjs(game.fixture.date).format('HH:mm')} </span>
                                                 }
                                                 {game.fixture.status.short === 'TBD' && 
                                                     <span className="fd-calendar__score fd-calendar__not-started"> - </span>
                                                 }
+                                                {(game.fixture.status.short === '1H' || game.fixture.status.short === 'HT' || game.fixture.status.short === '2H') &&
+                                                <>
+                                                    <span className="fd-calendar__score fd-calendar__score-home">{game.goals.home} - </span>
+                                                    <span className="fd-calendar__score fd-calendar__score-away">{game.goals.away}</span>
+                                                </>
+                                            }
                                             </div>
                                             <div className="fd-calendar__col fd-calendar__away-team">
                                                 <img src={game.teams.away.logo} alt={game.teams.away.name} className="fd-calendar__team-logo fd-calendar__away-team-logo"/>

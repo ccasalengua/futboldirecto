@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { liveMock } from "../../mocks/liveMock";
 import { roundMock } from "../../mocks/roundMock";
+import dayjs from "dayjs";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+dayjs.extend(isSameOrAfter);
 
 import './Live.scss';
 
@@ -9,40 +12,121 @@ export const Live = () => {
     
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?status="NS"`);
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?live=140-703`);
-    const round = roundMock;
-    // const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?season=2024&league=140&current=true`);
-    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=140&round=${round}`);
-    // const data = liveMock;
 
-    console.log(data);
+    // LIVE 
+    let {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?live=all`);
+    const liveData = data;
+    //END LIVE
+    
+    const round = roundMock;
+    // const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?current=true`);
+    // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=140&round=${round}`);
+    // let data = liveMock;
+
+    
+    data = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=140&round=${round}`);
+    
+    const roundSorted = data.data.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
+    
+    console.log('round: ', round)
+    console.log('liveMock: ' , data);
 
     return (
         <>
             <h1>En directo: </h1>
-
-            {/* <div className="fd-ranking">
-                <section className="fd-ranking__box fd-ranking__goals">
-                    <header className="fd-ranking__header">Goles</header>
+            <section className="fd-calendar fd-live">
+                <div className="fd-live__box fd-live__round" >
                     {
-                        data.map((player, i) => (
-                            <div className="fd-ranking__row" key={player.player.id}>
-                                <span className="fd-ranking__col fd-ranking__player-rank">{i + 1} </span>
-                                <div className="fd-ranking__col fd-ranking__player-info">
-                                    <img className="fd-ranking__player-photo" src={player.player.photo} alt={player.player.name}/>
-                                    <span className="fd-ranking__player-name">{player.player.name}</span>
-                                    <span className="fd-ranking__player-position">{player.statistics[0].games.position}</span>
-                                    <div className="fd-ranking__player-team">
-                                        <img className="fd-ranking__team-photo" src={player.statistics[0].team.logo} alt={player.statistics[0].team.name}/>
-                                        <span className="fd-ranking__team-name">{player.statistics[0].team.name}</span>
-                                    </div> 
+                        liveData.map((round, i) => (
+                            <div key={round.fixture.id} className="fd-calendar__box fd-calendar__round" >
+                                <div className="fd-calendar__header">Partido {i + 1}
+                                    <span className="fd-calendar__date">{dayjs(round.fixture.date).format('DD/MM/YYYY - HH:mm')}</span>
                                 </div>
-                                <span className="fd-ranking__col fd-ranking__player-goals">{player.statistics[0].goals.total}</span>
+                                <ul className="fd-calendar__list">
+                                    <li className="fd-calendar__row">
+                                        <div className="fd-calendar__col fd-calendar__home-team">
+                                            <span className="fd-calendar__team-name fd-calendar__home-team-name">{round.teams.home.name} </span>
+                                            <img src={round.teams.home.logo} alt={round.teams.home.name} className="fd-calendar__team-logo fd-calendar__home-team-logo"/>
+                                        </div>
+                                        <div className={`fd-calendar__score-box ${round.fixture.status.short === 'NS' || round.fixture.status.short === 'TBD' ? 'fd-calendar__score-box--ns' : ''}`}>
+                                            {round.fixture.status.short === 'FT' && 
+                                                <>
+                                                    <span className="fd-calendar__score fd-calendar__score-home">{round.goals.home} - </span>
+                                                    <span className="fd-calendar__score fd-calendar__score-away">{round.goals.away}</span>
+                                                </>
+                                            }
+                                            {round.fixture.status.short === 'NS' && 
+                                                <span className="fd-calendar__score fd-calendar__not-started">{dayjs(round.fixture.date).format('dd')} {dayjs(round.fixture.date).format('HH:mm')} </span>
+                                            }
+                                            {round.fixture.status.short === 'TBD' && 
+                                                <span className="fd-calendar__score fd-calendar__not-started"> - </span>
+                                            }
+                                            {(round.fixture.status.short === '1H' || round.fixture.status.short === 'HT' || round.fixture.status.short === '2H') &&
+                                                <>
+                                                    <span className="fd-calendar__score fd-calendar__score-home">{round.goals.home} - </span>
+                                                    <span className="fd-calendar__score fd-calendar__score-away">{round.goals.away}</span>
+                                                </>
+                                            }
+                                        </div>
+                                        <div className="fd-calendar__col fd-calendar__away-team">
+                                            <img src={round.teams.away.logo} alt={round.teams.away.name} className="fd-calendar__team-logo fd-calendar__away-team-logo"/>
+                                            <span className="fd-calendar__team-name fd-calendar__away-team-name">{round.teams.away.name} </span>
+                                        </div>
+                                    </li>           
+                                </ul>   
                             </div>
                         ))
                     }
-                </section>
-            
-            </div> */}
+                </div>
+            </section>
+            <section className="fd-calendar fd-live">
+            {roundSorted && 
+                <header className="fd-calendar__header">Jornada {parseInt(round[0].split("-")[1])}</header>
+            }
+                <div className="fd-live__box fd-live__round" >
+                    {
+                        roundSorted.map((round, i) => (
+                            <div key={round.fixture.id} className="fd-calendar__box fd-calendar__round" >
+                                <div className="fd-calendar__header">Partido {i + 1}
+                                    <span className="fd-calendar__date">{dayjs(round.fixture.date).format('DD/MM/YYYY - HH:mm')}</span>
+                                </div>
+                                <ul className="fd-calendar__list">
+                                    <li className="fd-calendar__row">
+                                        <div className="fd-calendar__col fd-calendar__home-team">
+                                            <span className="fd-calendar__team-name fd-calendar__home-team-name">{round.teams.home.name} </span>
+                                            <img src={round.teams.home.logo} alt={round.teams.home.name} className="fd-calendar__team-logo fd-calendar__home-team-logo"/>
+                                        </div>
+                                        <div className={`fd-calendar__score-box ${round.fixture.status.short === 'NS' || round.fixture.status.short === 'TBD' ? 'fd-calendar__score-box--ns' : ''}`}>
+                                            {round.fixture.status.short === 'FT' && 
+                                                <>
+                                                    <span className="fd-calendar__score fd-calendar__score-home">{round.goals.home} - </span>
+                                                    <span className="fd-calendar__score fd-calendar__score-away">{round.goals.away}</span>
+                                                </>
+                                            }
+                                            {round.fixture.status.short === 'NS' && 
+                                                <span className="fd-calendar__score fd-calendar__not-started">{dayjs(round.fixture.date).format('dd')} {dayjs(round.fixture.date).format('HH:mm')} </span>
+                                            }
+                                            {round.fixture.status.short === 'TBD' && 
+                                                <span className="fd-calendar__score fd-calendar__not-started"> - </span>
+                                            }
+                                            {(round.fixture.status.short === '1H' || round.fixture.status.short === 'HT' || round.fixture.status.short === '2H') &&
+                                                <>
+                                                    <span className="fd-calendar__score fd-calendar__score-home">{round.goals.home} - </span>
+                                                    <span className="fd-calendar__score fd-calendar__score-away">{round.goals.away}</span>
+                                                </>
+                                            }
+                                        </div>
+                                        <div className="fd-calendar__col fd-calendar__away-team">
+                                            <img src={round.teams.away.logo} alt={round.teams.away.name} className="fd-calendar__team-logo fd-calendar__away-team-logo"/>
+                                            <span className="fd-calendar__team-name fd-calendar__away-team-name">{round.teams.away.name} </span>
+                                        </div>
+                                    </li>           
+                                </ul>   
+                            </div>
+                        ))
+                    }
+                </div>
+            </section>
         </>
     );
 };

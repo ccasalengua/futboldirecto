@@ -9,7 +9,7 @@ import { Live } from "./components/Live/Live";
 import { Calendar } from "./components/Calendar/Calendar";
 
 function App() {
-    const [activeTab, setActiveTab] = useState('1');
+    const [activeTab, setActiveTab] = useState('0');
     const [league, setLeague] = useState(140);
 
     const changeTab = (event, newValue) => {
