@@ -18,7 +18,7 @@ export const Ranking = ({leagueID}) => {
     const [open, setOpen] = useState(false);
     const [player, setPlayer] = useState({name:''});
 
-    const handleClickOpen = (e,value) => {
+    const handleClickOpen = (value) => {
         setOpen(true);
         console.log('value: ', value)
         setPlayer(value)
@@ -46,7 +46,7 @@ export const Ranking = ({leagueID}) => {
                             <div className="fd-ranking__row" key={player.player.id}>
                                 <span className="fd-ranking__col fd-ranking__player-rank">{i + 1} </span>
                                 <div className="fd-ranking__col fd-ranking__player-info">
-                                    <Button onClick={(e) => handleClickOpen(e, player.player)}>
+                                    <Button onClick={() => handleClickOpen(player.player)}>
                                         <img className="fd-ranking__player-photo" src={player.player.photo} alt={player.player.name}/>
                                         <span className="fd-ranking__player-name">{player.player.name}</span>
                                         <span className="fd-ranking__player-position">{player.statistics[0].games.position}</span>

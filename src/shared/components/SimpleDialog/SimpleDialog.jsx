@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 export const SimpleDialog = (props) => {
     const { onClose, open, data } = props;
 
+    const player = data ? data : [{name: '', firstname:'', lastname: '', birth: {place: '', country:'', date: ''}, age: '', height: '', weight: '', team: ''}];
+
     const handleClose = () => {
       onClose();
     };
@@ -14,18 +16,18 @@ export const SimpleDialog = (props) => {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>{data.name}</DialogTitle>
+      <DialogTitle>{player.name}</DialogTitle>
       <button className="fd-simpledialog-close" onClick={handleClose}>X</button>
       <div>
           <dl>
-            <dt>Nombre Completo: </dt><dd>{data.firstname + data.lastname}</dd>
-            <dt>Pais de nacimiento: </dt><dd>{data.birth.place} ({data.birth.country})</dd>
-            <dt>Fecha de nacimiento: </dt><dd>{dayjs(data.birth.date).format('DD/MM/YYYY')}</dd>
-            <dt>Edad: </dt><dd>{data.age}</dd>
-            <dt>Demarcación: </dt><dd>{data.age}</dd>
-            <dt>Altura: </dt><dd>{data.height}</dd>
-            <dt>Peso: </dt><dd>{data.weight}</dd>
-            <dt>Club actual: </dt><dd>{data.team}</dd>
+            <dt>Nombre Completo: </dt><dd>{player.firstname + player.lastname}</dd>
+            {/* <dt>Pais de nacimiento: </dt><dd>{player.birth.place} ({player.birth.country})</dd> */}
+            {/* <dt>Fecha de nacimiento: </dt><dd>{dayjs(player.birth.date).format('DD/MM/YYYY')}</dd> */}
+            <dt>Edad: </dt><dd>{player.age}</dd>
+            <dt>Demarcación: </dt><dd>{player.age}</dd>
+            <dt>Altura: </dt><dd>{player.height}</dd>
+            <dt>Peso: </dt><dd>{player.weight}</dd>
+            <dt>Club actual: </dt><dd>{player.team}</dd>
           </dl>
       </div>
         
