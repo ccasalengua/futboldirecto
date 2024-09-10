@@ -1,30 +1,33 @@
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: left;
-}
-
-.fd-tabs {
-  .MuiTabs-scroller{
-    overflow: auto!important;
-  }
-  &__panel.MuiTabPanel-root{
-    padding: 1.5rem 0 0;
-  }
-}
-
-@import './styles/settings/_settings__config';
-@import './styles/settings/_settings__colors';
-@import './styles/settings/_settings__responsive';
-
-@import './styles/tools/_tools__responsive';
 
 
+// <-----------------> SETTINGS <-------------------->
+@import "./styles/settings/_settings__config";
+@import "./styles/settings/_settings__colors";
+@import "./styles/settings/_settings__responsive";
+// <-----------------> SETTINGS <-------------------->
 
-@import './shared/components/SimpleDialog/SimpleDialog.scss';
+// <-----------------> TOOLS <-------------------->
+@import "./styles/tools/_tools__responsive";
+@import "./styles/tools/_tools__px-to-rem";
+@import "./styles/tools/_tools__colors";
+// <-----------------> TOOLS <-------------------->
 
-@import './styles/reset';
+// <-----------------> GENERIC <-------------------->
+@import "./styles/generic/_generic__reset";
+// <-----------------> GENERIC <-------------------->
 
+// <-----------------> BASE <-------------------->
+// <-----------------> BASE <-------------------->
 
+// <-----------------> OBJECTS <-------------------->
+// <-----------------> OBJECTS <-------------------->
+
+// <-----------------> SHARED COMPONENTS <-------------------->
+@import "./shared/components/SimpleDialog/SimpleDialog.scss";
+@import "./shared/components/Tabs/Tabs.scss";
+// <-----------------> SHARED COMPONENTS <-------------------->
+
+// <-----------------> TRUMPS <-------------------->
+@import "./styles/trumps/_trumps__clearfix.scss";
+// <-----------------> TRUMPS <-------------------->

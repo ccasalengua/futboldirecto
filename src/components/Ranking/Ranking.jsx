@@ -4,6 +4,7 @@ import { rankingMock } from "../../mocks/rankingMock";
 import PropTypes from 'prop-types';
 import { SimpleDialog } from "../../shared/components/SimpleDialog/SimpleDialog";
 import Button from '@mui/material/Button';
+import { getPosition } from "../../helpers/getPosition";
 
 import './Ranking.scss';
 
@@ -43,18 +44,20 @@ export const Ranking = ({leagueID}) => {
                     {
                         data.map((player, i) => (
                             <div className="fd-ranking__row" key={player.player.id}>
-                                <span className="fd-ranking__col fd-ranking__player-rank">{i + 1} </span>
-                                <div className="fd-ranking__col fd-ranking__player-info">
-                                    <Button onClick={() => handleClickOpen(player)}>
+                                <span className="fd-ranking__player-rank">{i + 1} </span>
+                                <Button className="fd-ranking__player-button" onClick={() => handleClickOpen(player)}>
+                                    <div className="fd-ranking__col fd-ranking__player-content">
                                         <img className="fd-ranking__player-photo" src={player.player.photo} alt={player.player.name}/>
-                                        <span className="fd-ranking__player-name">{player.player.name}</span>
-                                        <span className="fd-ranking__player-position">{player.statistics[0].games.position}</span>
-                                        <div className="fd-ranking__player-team">
-                                            <img className="fd-ranking__team-photo" src={player.statistics[0].team.logo} alt={player.statistics[0].team.name}/>
-                                            <span className="fd-ranking__team-name">{player.statistics[0].team.name}</span>
-                                        </div> 
-                                    </Button>
-                                </div>
+                                        <div className="fd-ranking__player-info">
+                                            <span className="fd-ranking__player-name">{player.player.name}</span>
+                                            <span className="fd-ranking__player-position">{getPosition(player.statistics[0].games.position)}</span>
+                                            <div className="fd-ranking__player-team">
+                                                <img className="fd-ranking__team-photo" src={player.statistics[0].team.logo} alt={player.statistics[0].team.name}/>
+                                                <span className="fd-ranking__team-name">{player.statistics[0].team.name}</span>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </Button>
                                 <span className="fd-ranking__col fd-ranking__player-goals">{player.statistics[0].goals.total}</span>
                             </div>
                         ))

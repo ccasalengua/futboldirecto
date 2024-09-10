@@ -1,0 +1,8 @@
+.fd-tabs {
+    .MuiTabs-scroller {
+      overflow: auto !important;
+    }
+    &__panel.MuiTabPanel-root {
+      padding: 1.5rem 0 0;
+    }
+  }

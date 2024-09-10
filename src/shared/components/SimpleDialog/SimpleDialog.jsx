@@ -2,12 +2,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import { getPosition } from '../../../helpers/getPosition';
   
 export const SimpleDialog = (props) => {
     const { onClose, open, data } = props;
 
     const player = data?.player ? data.player : {name: '', firstname:'', lastname: '', birth: {place: '', country:'', date: ''}, age: '', height: '', weight: '', team: ''};
-    const statistics =  data?.statistics ? data.statistics[0] : {team: {}, league: {}, games: {position:''}, substitutes: {}, goals: {}, penalty: {}, fouls: {}, shots: {}};
+    const statistics =  data?.statistics ? data.statistics[0] : {team: {}, league: {}, games: {position:''}, substitutes: {}, goals: {}, penalty: {}, fouls: {}, shots: {}, cards: {}};
 
     const handleClose = () => {
       onClose();
@@ -15,19 +16,6 @@ export const SimpleDialog = (props) => {
 
     console.log('playerDataDialog: ', player);
     console.log('statisticsDataDialog', statistics)
-
-    const getPosition = (position) => {
-      switch (position) {
-        case 'Attacker': 
-            return 'Delantero'
-        case 'Defender': 
-            return 'Defensa'
-        case 'MidFielder': 
-            return 'Defensa'
-        default: 
-            return '-'
-      }
-    };
 
   return (
     <Dialog className="fd-simpledialog" onClose={handleClose} open={open}>
@@ -54,14 +42,16 @@ export const SimpleDialog = (props) => {
             <dt className="fd-simpledialog__dlist-title">Tiros a puerta: </dt><dd className="fd-simpledialog__dlist-description">{statistics.shots.total}</dd>
             <dt className="fd-simpledialog__dlist-title">Goles de penalty: </dt><dd className="fd-simpledialog__dlist-description">{statistics.penalty.scored}</dd>
             <dt className="fd-simpledialog__dlist-title">Penalty fallados: </dt><dd className="fd-simpledialog__dlist-description">{statistics.penalty.missed}</dd>
-            <dt className="fd-simpledialog__dlist-title">Faltas recibidas: </dt><dd className="fd-simpledialog__dlist-description">{statistics.fouls.draw}</dd>
+            <dt className="fd-simpledialog__dlist-title">Faltas recibidas: </dt><dd className="fd-simpledialog__dlist-description">{statistics.fouls.drawn ? statistics.fouls.drawn : 0}</dd>
             <dt className="fd-simpledialog__dlist-title">Faltas hechas: </dt><dd className="fd-simpledialog__dlist-description">{statistics.fouls.committed}</dd>
             <dt className="fd-simpledialog__dlist-title">Partidos jugados: </dt><dd className="fd-simpledialog__dlist-description">{statistics.games.appearences}</dd>
             <dt className="fd-simpledialog__dlist-title">Partidos siendo titular: </dt><dd className="fd-simpledialog__dlist-description">{statistics.games.lineups}</dd>
             <dt className="fd-simpledialog__dlist-title">Minutos Jugados: </dt><dd className="fd-simpledialog__dlist-description">{statistics.games.minutes}</dd>
             <dt className="fd-simpledialog__dlist-title">Partidos sustituidos: </dt><dd className="fd-simpledialog__dlist-description">{statistics.substitutes.out}</dd>
-            <dt className="fd-simpledialog__dlist-title">Partidos jugados como sustituto: </dt><dd className="fd-simpledialog__dlist-description">{statistics.substitutes.in}</dd>
-
+            <dt className="fd-simpledialog__dlist-title">Partidos como sustituto: </dt><dd className="fd-simpledialog__dlist-description">{statistics.substitutes.in}</dd>
+            <dt className="fd-simpledialog__dlist-title">Tarjetas rojas: </dt><dd className="fd-simpledialog__dlist-description">{statistics.cards.red}</dd>
+            <dt className="fd-simpledialog__dlist-title">Tarjetas amarillas: </dt><dd className="fd-simpledialog__dlist-description">{statistics.cards.yellow}</dd>
+            <dt className="fd-simpledialog__dlist-title">Tarjetas naranja: </dt><dd className="fd-simpledialog__dlist-description">{statistics.cards.yellowred}</dd>
           </dl>
       </div>
         

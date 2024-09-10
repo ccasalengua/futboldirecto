@@ -1,25 +1,70 @@
+@import "../../styles/_styles__settings__tools";
+
 .fd-ranking {
     display: flex;
     flex-flow: wrap;
+    gap: 0 rem(16);
 
     &__box {
         border: 1px solid #a3a3a3;
-        background-color: #dfdfdf;
+        flex-basis: calc(33% - 8px);
     }
 
     &__header {
         font-size: 1.25rem;
         font-weight: bold;
         padding: 1rem;
-        border-bottom: 1px solid #a3a3a3;;
+        border-bottom: 1px solid #a3a3a3;
+        background-color: #dfdfdf;
     }
 
     &__row {
         display: flex;
-
+        flex-flow: row nowrap;
+        justify-content: space-between;
     }
     &__col {
         display: flex;
+        align-items: flex-end;
+    }
+    &__player-photo {
+        max-width: rem(60);
+    }
+    &__team-photo {
+        max-width: rem(20);
+    }
+    &__player-info {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        
+    }
+    &__player-position {
+        font-size: rem(12);
+        font-style: italic;
+    }
+    &__player-team {
+        font-size: rem(12);
+    }
+    &__player-button {
+        flex-basis: 80%;
     }
 }
 
+
+@include media-query('md') {
+    .fd-ranking {
+        &__box {
+            flex-basis: calc(50% - 8px);
+        }
+    }
+}
+
+@include media-query('sm') {
+    .fd-ranking {
+        gap: 1rem 0;
+        &__box {
+            flex-basis: calc(100%);
+        }
+    }
+}

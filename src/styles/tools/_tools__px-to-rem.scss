@@ -1,0 +1,5 @@
+@use "sass:math";
+
+@function rem($pixels, $context: $base__font-size) {
+    @return #{math.div($pixels, $context) + rem};
+}

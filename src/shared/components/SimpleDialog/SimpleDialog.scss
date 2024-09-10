@@ -5,14 +5,26 @@
         max-width: 64rem;
         overflow-x: hidden;
     }
+    .MuiDialogTitle-root {
+        padding: 0;
+    }
     &__close {
         position: absolute;
         right: 1rem;
         top: 1rem;
+        font-family: cursive;
+        border: 0;
+        border-radius: 50%;
+        font-size: rem(32);
+        width: rem(40);
+        height: rem(40);
+        line-height: rem(32);
     }
     &__dlist{
         display: flex;
         flex-flow: row wrap;
+        padding-top: 0.5rem;
+        border-top: 1px solid color(blue);
     }
     &__dlist-title {
         font-weight: bold;
@@ -24,22 +36,55 @@
     }
     &__subtitle{
         font-size: 2rem;
-        border-bottom: 1px solid blue;
     }
     &__logo-team{
         max-width: 1.4rem;
     }
     &__photo{
-        max-width: 5rem;
+        max-width: 7rem;
         border-radius: 50%;
     }
+    &__player-content{
+        flex-basis: 100%;
+    }
 }
+
+@include media-query('md') {
+    .fd-simpledialog {
+        &__dlist-title {
+            flex-basis: 36%;
+        }
+        &__dlist-description {
+            flex-basis: 64%;
+    
+        }
+    }
+}
+
+@include media-query('md') {
+    .fd-simpledialog {
+        &__dlist-title {
+            flex-basis: 50%;
+        }
+        &__dlist-description {
+            flex-basis: 50%;
+        }
+    }
+}
+
 
 @include media-query('xs') {
     .fd-simpledialog {
         .MuiDialog-paper {
             max-width: 100%;
             flex-basis: 100%;
+        }
+        &__dlist-title {
+            flex-basis: 100%;
+        }
+        &__dlist-description {
+            flex-basis: 100%;
+    
         }
     }
 }
