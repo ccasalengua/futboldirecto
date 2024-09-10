@@ -1,0 +1,7 @@
+$breakpoints: (
+    'xs' "screen and (max-width: 29.96rem)",
+    'sm' "screen and (max-width: 47.96rem)",
+    'md' "screen and (max-width: 63.96rem)",
+    'lg' "screen and (max-width: 79.96rem)",
+    'xl' "screen and (min-width: 79.96rem)",
+) !default;

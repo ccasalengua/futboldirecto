@@ -1,0 +1,19 @@
+@mixin media-query($mq) {
+    $breakpoint-found: false;
+    @each $breakpoint in $breakpoints {
+        $alias: nth($breakpoint, 1);
+        $condition: nth($breakpoint, 2);
+
+        @if $mq == $alias and $condition {
+            $breakpoint-found: true;
+
+            @media #{$condition} {
+                @content;
+            }
+        }
+    }
+
+    @if $breakpoint-found == false {
+        @warn "FAIL! el Breakpoint '#{mq}' no existe";
+    }
+}

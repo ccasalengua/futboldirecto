@@ -1,3 +1,46 @@
-.fd-dialog{
-    
+.fd-simpledialog {
+    .MuiDialog-paper {
+        padding: 2rem;
+        flex-basis: 64rem;
+        max-width: 64rem;
+        overflow-x: hidden;
+    }
+    &__close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+    &__dlist{
+        display: flex;
+        flex-flow: row wrap;
+    }
+    &__dlist-title {
+        font-weight: bold;
+        flex-basis: 20%;
+    }
+    &__dlist-description {
+        flex-basis: 30%;
+
+    }
+    &__subtitle{
+        font-size: 2rem;
+        border-bottom: 1px solid blue;
+    }
+    &__logo-team{
+        max-width: 1.4rem;
+    }
+    &__photo{
+        max-width: 5rem;
+        border-radius: 50%;
+    }
 }
+
+@include media-query('xs') {
+    .fd-simpledialog {
+        .MuiDialog-paper {
+            max-width: 100%;
+            flex-basis: 100%;
+        }
+    }
+}
+

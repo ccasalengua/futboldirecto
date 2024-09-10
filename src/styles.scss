@@ -15,6 +15,16 @@
   }
 }
 
+@import './styles/settings/_settings__config';
+@import './styles/settings/_settings__colors';
+@import './styles/settings/_settings__responsive';
+
+@import './styles/tools/_tools__responsive';
+
+
+
+@import './shared/components/SimpleDialog/SimpleDialog.scss';
+
 @import './styles/reset';
 
 
