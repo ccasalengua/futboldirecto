@@ -14,14 +14,22 @@ export const SimpleDialog = (props) => {
       onClose();
     };
 
-    console.log('playerDataDialog: ', player);
-    console.log('statisticsDataDialog', statistics)
+    // console.log('playerDataDialog: ', player);
+    // console.log('statisticsDataDialog', statistics)
 
   return (
     <Dialog className="fd-simpledialog" onClose={handleClose} open={open}>
-      <DialogTitle className="fd-simpledialog__title"><img className="fd-simpledialog__photo" src={player.photo} alt={player.name}/>{player.name}</DialogTitle>
+      <DialogTitle className="fd-simpledialog__title">
+        <img className="fd-simpledialog__photo" src={player.photo} alt={player.name}/>
+        <div className="fd-simpledialog__player-info">
+          <p className="fd-simpledialog__player-name">{player.name}</p>
+          <p className="fd-simpledialog__player-position">{getPosition(statistics.games.position)}</p>
+          <p className="fd-simpledialog__player-team"><img className="fd-simpledialog__logo-team" src={statistics.team.logo} alt={statistics.team.name}/>{statistics.team.name}</p>
+        </div>
+
+      </DialogTitle>
       <button className="fd-simpledialog__close" onClick={handleClose}>X</button>
-      <div>
+      <div className="fd-simpledialog__content">
           <p className="fd-simpledialog__subtitle">Datos Personales</p>
           <dl className="fd-simpledialog__dlist">
             <dt className="fd-simpledialog__dlist-title">Nombre Completo: </dt><dd className="fd-simpledialog__dlist-description">{player.firstname} {player.lastname}</dd>
@@ -32,8 +40,6 @@ export const SimpleDialog = (props) => {
             <dt className="fd-simpledialog__dlist-title">Lesionado: </dt><dd className="fd-simpledialog__dlist-description">{player.injured ? 'Si' : ' No'}</dd>
             <dt className="fd-simpledialog__dlist-title">Altura: </dt><dd className="fd-simpledialog__dlist-description">{player.height}</dd>
             <dt className="fd-simpledialog__dlist-title">Peso: </dt><dd className="fd-simpledialog__dlist-description">{player.weight}</dd>
-            <dt className="fd-simpledialog__dlist-title">Demarcación: </dt><dd className="fd-simpledialog__dlist-description">{getPosition(statistics.games.position)}</dd>
-            <dt className="fd-simpledialog__dlist-title">Club actual: </dt><dd className="fd-simpledialog__dlist-description"><img className="fd-simpledialog__logo-team" src={statistics.team.logo} alt={statistics.team.name}/>{statistics.team.name}</dd>
           </dl>
           <p className="fd-simpledialog__subtitle">Estadisticas</p>
           <dl className="fd-simpledialog__dlist">

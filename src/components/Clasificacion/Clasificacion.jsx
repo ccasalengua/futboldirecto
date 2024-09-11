@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import PropTypes from 'prop-types';
-import { premierLeagueMock } from "../../mocks/premierLeague";
+// import { premierLeagueMock } from "../../mocks/premierLeague";
 
 import './Clasificacion.scss';
 import { Loading } from "../../shared/components/Loading/Loading";

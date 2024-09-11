@@ -7,6 +7,8 @@
     }
     .MuiDialogTitle-root {
         padding: 0;
+        display: flex;
+        align-items: center;
     }
     &__close {
         position: absolute;
@@ -44,9 +46,24 @@
         max-width: 7rem;
         border-radius: 50%;
     }
-    &__player-content{
-        flex-basis: 100%;
+
+    &__player-info {
+        padding-left: rem(16);
     }
+    &__player-position {
+        font-size: rem(12);
+    }
+    &__player-team {
+        font-size: rem(12);
+        display: flex;
+        align-items: center;
+        > img {
+            margin-right: rem(4);
+        }
+    }
+    &__content {
+        margin-top: rem(8);
+    }   
 }
 
 @include media-query('md') {
@@ -85,6 +102,12 @@
         &__dlist-description {
             flex-basis: 100%;
     
+        }
+        &__photo {
+            max-width: 5rem;
+        }
+        &__subtitle{
+            font-size: rem(20);
         }
     }
 }

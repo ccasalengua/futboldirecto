@@ -1,4 +1,4 @@
-export const rankingMock = [
+export const topGoalsMock = {data: [
     {
         "player": {
             "id": 521,
@@ -1899,4 +1899,4 @@ export const rankingMock = [
             }
         ]
     }
-];
+]};

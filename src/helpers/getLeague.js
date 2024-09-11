@@ -1,5 +1,5 @@
 export const getLeague = async(leagueID) => {
-    const apiKey = '34082beab83494bf37f0e7658605122b';
+    const apiKey = import.meta.env.VITE_FOOTBALL_API_KEY;
 
     const requestOptions = {
         method: 'GET',

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { liveMock } from "../../mocks/liveMock";
-import { roundMock } from "../../mocks/roundMock";
+// import { liveMock } from "../../mocks/liveMock";
+// import { roundMock } from "../../mocks/roundMock";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import PropTypes from 'prop-types';
 dayjs.extend(isSameOrAfter);
 
 import './Live.scss';
@@ -130,3 +131,7 @@ export const Live = ({leagueID}) => {
         </>
     );
 };
+
+Live.propTypes = {
+    leagueID: PropTypes.number
+}

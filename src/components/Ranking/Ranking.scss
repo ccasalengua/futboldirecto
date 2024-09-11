@@ -22,10 +22,12 @@
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
+        border-top: 1px solid color(grey-1);
     }
     &__col {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
+        justify-content: center;
     }
     &__player-photo {
         max-width: rem(60);
@@ -37,6 +39,7 @@
         display: flex;
         flex-flow: column nowrap;
         align-items: flex-start;
+        padding: rem(8) rem(8) rem(8) rem(16);
         
     }
     &__player-position {
@@ -46,8 +49,24 @@
     &__player-team {
         font-size: rem(12);
     }
+    &__player-rank {
+        flex-basis: 10%;
+        background: #e7e7e7;
+    }
+    &__player-content {
+        flex-basis: 75%;
+        padding-left: rem(8);
+        border-left: 1px solid color(grey-1);
+    }
+    &__player-number {
+        flex-basis: 15%;
+    }
     &__player-button {
-        flex-basis: 80%;
+        display: flex;
+        align-items: flex-end;
+        flex-basis: 100%;
+        border: 0;
+        background: transparent;
     }
 }
 
