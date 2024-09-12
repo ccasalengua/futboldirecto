@@ -2,9 +2,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
-import { getPosition } from '../../../helpers/getPosition';
+import { getPosition } from '../../../../helpers/getPosition';
   
-export const SimpleDialog = (props) => {
+export const PlayerDialog = (props) => {
     const { onClose, open, data } = props;
 
     const player = data?.player ? data.player : {name: '', firstname:'', lastname: '', birth: {place: '', country:'', date: ''}, age: '', height: '', weight: '', team: ''};
@@ -65,7 +65,7 @@ export const SimpleDialog = (props) => {
   )
 }
 
-SimpleDialog.propTypes = {
+PlayerDialog.propTypes = {
     onClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
     data: PropTypes.object,

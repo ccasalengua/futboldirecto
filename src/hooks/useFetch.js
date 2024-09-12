@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { requestOptions } from "../helpers/services/requestOptions";
 
 const localCache = {};
 
@@ -24,15 +25,6 @@ export const useFetch = (url) => {
             error: null
         })
      }
-
-     const requestOptions = {
-        method: 'GET',
-        headers: {
-            "x-rapidapi-host": "v3.football.api-sports.io",
-            "x-rapidapi-key": import.meta.env.VITE_FOOTBALL_API_KEY
-        },
-        redirect: 'follow'
-    };
     
      const getFetch = async() => {
         if (localCache[url]){
@@ -75,12 +67,10 @@ export const useFetch = (url) => {
         });
 
         localCache[url] = data;
-
-        console.log('data: ', data);
-
     }
 
     return {
+        fetch: getFetch,
         data: state.data,
         isLoading: state.isLoading,
         hasError: state.hasError

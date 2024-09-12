@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { calendarMock } from "../../mocks/calendarMock";
+// import { calendarMock } from "../../mocks/calendarMock";
+import PropTypes from 'prop-types';
 import dayjs from "dayjs";
 import es from "dayjs/locale/es";
-import minMax from "dayjs/plugin/minMax";
-import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-dayjs.extend(minMax);
-dayjs.extend(isSameOrBefore);
-dayjs.extend(isSameOrAfter);
+import { Loading } from "../../shared/components/Loading/Loading";
+import { getGamesForRound } from "../../helpers/getGamesForRound";
+
 dayjs.locale(es);
-
-
 import './Calendar.scss';
 
 export const Calendar = ({leagueID}) => {    
@@ -19,50 +15,11 @@ export const Calendar = ({leagueID}) => {
     const {data = [], hasError, isLoading} = useFetch(`https:v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}`);
     // const data = calendarMock;
 
-    console.log('calendarMock: ', data);
-
-    const getRound = () => {
-        let roundsArray = [];
-        data.map((round) => {
-            
-            if (!roundsArray.includes(round.league.round)) {
-                roundsArray = [...roundsArray, round.league.round];
-            }
-        });
-        return roundsArray;
+    if (hasError) {
+        return <p>Ha habido un problema en la carga... Intenta de nuevo mas tarde.</p>
     }
-
-    const gamesForRound = (data) => {
-        let gamesForRound = [];
-
-        getRound().map((round, index) => {
-            gamesForRound.push({
-                round: round,
-                dates: [],
-                datesShort: [],
-                finalDate: '',
-                roundNumber: parseInt(round.split("-")[1]),
-                games: []
-            });
-            data.map((game) => {
-                if (game.league.round === round) {
-                    gamesForRound[index].games.push(game);
-                    gamesForRound[index].dates.push(dayjs(game.fixture.date));
-                    gamesForRound[index].datesShort.push(dayjs(game.fixture.date).format('DD/MM/YYYY'));
-                }
-            });
-
-            let firstDate = dayjs.min(...gamesForRound[index].dates).format('DD');
-            let lastDate = dayjs.max(...gamesForRound[index].dates).format('DD');
-            let firstMonth = dayjs.min(...gamesForRound[index].dates).format('MMMM');
-            let lastMonth = dayjs.max(...gamesForRound[index].dates).format('MMMM');
-
-            gamesForRound[index].finalDate = `${firstDate} ${firstMonth === lastMonth ? '' : firstMonth} - ${lastDate} ${lastMonth} `;
-            gamesForRound[index].games = gamesForRound[index].games.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
-
-        });
-        
-        return gamesForRound;
+    if (isLoading || !data) {
+        return <Loading></Loading>
     }
 
     return (
@@ -71,7 +28,7 @@ export const Calendar = ({leagueID}) => {
 
             <div className="fd-calendar">
                 {
-                    gamesForRound(data).map((round) => (
+                    getGamesForRound(data).map((round) => (
                         <section className="fd-calendar__box fd-calendar__round" key={round.roundNumber} >
                             <header className="fd-calendar__header">Jornada {round.roundNumber} 
                                 <span className="fd-calendar__date">{round.finalDate}</span>
@@ -119,3 +76,7 @@ export const Calendar = ({leagueID}) => {
         </>
     );
 };
+
+Calendar.propTypes = {
+    leagueID: PropTypes.number
+}

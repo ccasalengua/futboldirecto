@@ -2,22 +2,36 @@ import { useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import PropTypes from 'prop-types';
 // import { premierLeagueMock } from "../../mocks/premierLeague";
+import { Loading } from "../../shared/components/Loading/Loading";
+import { getRankPosition } from "../../helpers/getRankPosition";
+import { TeamDialog } from "../../shared/components/dialog/TeamDialog/TeamDialog";
+import { requestOptions } from "../../helpers/services/requestOptions";
 
 import './Clasificacion.scss';
-import { Loading } from "../../shared/components/Loading/Loading";
+
+const localCache = {};
 
 export const Clasificacion = ({leagueID}) => {
 
     const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/standings?league=${leagueID}&season=2024`);
+    
     // const data = premierLeagueMock;
 
     const numberOfTeams = data[0]?.league?.standings[0].length;
 
     const [collapse, setCollapse] = useState(new Array(numberOfTeams).fill(true));
+    const [open, setOpen] = useState(false);
+    const [team, setTeam] = useState({});
+    const [isLoadingTeam, setIsLoadingTeam] = useState(true);
 
     const setCollapseDataAsync = async () => {
         setCollapse(new Array(numberOfTeams).fill(true))
     }
+
+    useEffect(() => {
+        onClickInfoTeam
+    }, [])
+    
 
     const useEffectIf = (loading, fn) => {
         useEffect(() => {if (!loading) {
@@ -28,6 +42,45 @@ export const Clasificacion = ({leagueID}) => {
 
 
     useEffectIf(isLoading, setCollapseDataAsync);
+
+    
+
+    const onClickInfoTeam = async(idTeam) => {
+        setOpen(true);
+        
+        let url = `https://v3.football.api-sports.io/teams?id=${idTeam}`;
+        
+        if (localCache[url]){
+            setTeam(localCache[url].response[0])
+            setOpen(true);
+            return;
+        }
+
+        setIsLoadingTeam(true);
+
+        try {
+            const result = await fetch(url, requestOptions);
+            if (!result.ok) {
+                console.log('Ha habido un error')
+                return; 
+            }
+            
+            const resp = await result.json();
+            setTeam(resp.response[0]);
+            setIsLoadingTeam(false);
+    
+            localCache[url] = resp;
+            
+        } catch(error) {
+            console.log('Hubo un problema con la petición Fetch:' + error.message);
+            setIsLoadingTeam(false);
+        }       
+        
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     
 
     if (hasError) {
@@ -45,24 +98,18 @@ export const Clasificacion = ({leagueID}) => {
         });
     };
 
-    const rankPosition = (team) => {
-        switch (team.description) {
-            case 'Champions League':
-                return 'champions'
-            case 'UEFA Europa League':
-                return 'uefa'
-            case 'Conference League Qualification':
-                return 'conference'
-            case 'Relegation':
-                return 'relegation'
-            default:
-                return ''
-        }
-    }
+    
 
     return (
         <>
             <h1>Clasificación de: </h1>
+
+            <TeamDialog
+                open={open}
+                onClose={handleClose}
+                data={team}
+                isLoadingTeam={isLoadingTeam}
+            />
 
             {
                 data.map(league => (
@@ -89,13 +136,14 @@ export const Clasificacion = ({leagueID}) => {
                                 {
                                     league.league.standings.map(teams => (
                                         teams.map((team,index) => (
-                                            <tr className={`fd-table__row ${collapse[index] ? 'collapsed' : 'collapsed-in'} ${rankPosition(team)} `} key={index} onClick={() => clickCollapse(index)}>
+                                            <tr className={`fd-table__row ${collapse[index] ? 'collapsed' : 'collapsed-in'} ${getRankPosition(team)} `} key={index} onClick={() => clickCollapse(index)}>
                                                 <td className={`fd-table__col`}>
+                                                    <button className="fd-table__team-button" onClick={() => onClickInfoTeam(team.team.id)}>Info team</button>
                                                     <div className="fd-table__col-int">
                                                         <span className="fd-table__team-rank">{team.rank} </span> 
                                                         <span className="fd-table__team-logo"><img className="fd-table__logo-team" src={team.team.logo} alt={team.team.name}/></span> 
                                                         <span className="fd-table__team-name">{team.team.name}</span>
-                                                 
+                                                
                                                         <button className="fd-table__collapse-button" >Desplegar</button>
                                                     </div>
                                                 </td> 

@@ -83,7 +83,7 @@ export const Live = ({leagueID}) => {
                 </div>
             </section>
             <section className="fd-calendar fd-live">
-                {/* <header className="fd-calendar__header">Jornada {parseInt(round[0].split("-")[1])}</header> */}
+                <header className="fd-calendar__header">Jornada {round.data} - Liga: </header>
                 <div className="fd-live__box fd-live__round" >
                     {
                         roundSorted.map((round, i) => (

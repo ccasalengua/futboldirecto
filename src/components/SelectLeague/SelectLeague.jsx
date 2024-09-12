@@ -1,8 +1,9 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
-import { useFetch } from "../../hooks/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
 import { Box, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import { leaguesMock } from "../../mocks/LeaguesMock";
+import { Loading } from "../../shared/components/Loading/Loading";
 
 import './SelectLeague.scss';
 
@@ -15,8 +16,17 @@ export const SelectLeague = ({onChangeLeague}) => {
     };
     // const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/leagues`);
     const data = leaguesMock;
+    const hasError = null;
+    const isLoading = false;
 
     // const mainLeaguesID = [140, 39];
+
+    if (hasError) {
+        return <p>Ha habido un problema en la carga... Intenta de nuevo mas tarde.</p>
+    }
+    if (isLoading || !data) {
+        return <Loading></Loading>
+    }
 
     return (
         <Box sx={{ minWidth: 120}}>

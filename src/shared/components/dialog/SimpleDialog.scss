@@ -45,6 +45,9 @@
     &__photo{
         max-width: 7rem;
         border-radius: 50%;
+        &-team{
+            max-width: 7rem;
+        }
     }
 
     &__player-info {
@@ -64,6 +67,15 @@
     &__content {
         margin-top: rem(8);
     }   
+    &__venue-box {
+        margin: rem(16) rem(32);
+        text-align: center;
+    }
+    &__venue-img {
+        width: auto;
+        max-width: 100%;
+        border: 1px solid #000;
+    }
 }
 
 @include media-query('md') {
