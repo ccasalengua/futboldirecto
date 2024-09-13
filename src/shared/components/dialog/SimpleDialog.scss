@@ -76,6 +76,9 @@
         max-width: 100%;
         border: 1px solid #000;
     }
+    &__driver-number {
+        font-family: fantasy, verdana;
+    }
 }
 
 @include media-query('md') {

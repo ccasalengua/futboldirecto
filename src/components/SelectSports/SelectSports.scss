@@ -1,0 +1,20 @@
+@import "../../styles/_styles__settings__tools";
+
+.fd-select {
+    + .fd-select {
+        margin-top: rem(2);
+    }
+
+    &__flag{
+        background-size: cover;
+        display: block;
+        width: 1.5625rem;
+        height: 1.125rem;
+        margin-right: 1.25rem;
+    }
+    .MuiSelect-select {
+        display: flex;
+    }
+}
+
+
