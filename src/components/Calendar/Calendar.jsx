@@ -12,7 +12,7 @@ import './Calendar.scss';
 
 export const Calendar = ({leagueID}) => {    
         
-    const {data = [], hasError, isLoading} = useFetch(`https:v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}`);
+    const {data = [], hasError, isLoading} = useFetch(`https:v3.football.api-sports.io/fixtures?season=2026&league=${leagueID}`);
     // const data = calendarMock;
 
     if (hasError) {

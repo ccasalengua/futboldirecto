@@ -20,12 +20,12 @@ export const Live = ({leagueID}) => {
     console.log('liveData: ' , liveData.data);
     //END LIVE
     
-    const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?league=${leagueID}&season=2024&current=true`);
+    const round = useFetch(`https://v3.football.api-sports.io/fixtures/rounds?league=${leagueID}&season=2026&current=true`);
     // const round = roundMock;
     console.log('round: ', round.data);
     
     
-    const roundData = useFetch(`https://v3.football.api-sports.io/fixtures?season=2024&league=${leagueID}&round=${round.data}`);
+    const roundData = useFetch(`https://v3.football.api-sports.io/fixtures?season=2026&league=${leagueID}&round=${round.data}`);
     const roundSorted = roundData.data.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);
 
     // const roundSorted = data.sort((a, b) => dayjs(a.fixture.date).isSameOrAfter(dayjs(b.fixture.date)) ? 1 : -1);

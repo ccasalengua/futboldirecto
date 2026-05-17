@@ -13,8 +13,8 @@ import './Ranking.scss';
 
 export const Ranking = ({leagueID}) => {    
     
-    const topGoals = useFetch(`https://v3.football.api-sports.io/players/topscorers?season=2024&league=${leagueID}`);
-    const topAssist = useFetch(`https://v3.football.api-sports.io/players/topassists?season=2024&league=${leagueID}`);
+    const topGoals = useFetch(`https://v3.football.api-sports.io/players/topscorers?season=2026&league=${leagueID}`);
+    const topAssist = useFetch(`https://v3.football.api-sports.io/players/topassists?season=2026&league=${leagueID}`);
     // const playersLeague = useFetch(`https://v3.football.api-sports.io/players?season=2024&league=${leagueID}&page=2`);
     // console.log(playersLeague.data)
    

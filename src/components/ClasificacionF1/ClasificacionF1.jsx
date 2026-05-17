@@ -12,9 +12,9 @@ const localCache = {};
 
 export const ClasificacionF1 = ({season}) => {
 
-    // const {data = [], hasError, isLoading} = useFetch(`https://v1.formula-1.api-sports.io/rankings/drivers?season=${season}`);
+    const {data = [], hasError, isLoading} = useFetch(`https://v1.formula-1.api-sports.io/rankings/drivers?season=${season}`);
     
-    const data = clasificacionF1Mock;
+    //const data = clasificacionF1Mock;
     const hasError = null;
     const isLoading = false;
     console.log('dataF1', data);

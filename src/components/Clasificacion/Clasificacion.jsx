@@ -13,7 +13,7 @@ const localCache = {};
 
 export const Clasificacion = ({leagueID}) => {
 
-    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/standings?league=${leagueID}&season=2024`);
+    const {data = [], hasError, isLoading} = useFetch(`https://v3.football.api-sports.io/standings?league=${leagueID}&season=2026`);
     
     // const data = premierLeagueMock;
 
